@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file: .env
+    ports:
+      - '3001:3001'
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: teste_einstein_postgres
+    image: postgres
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: teste_einstein
+      PGDATA: /data/postgres
+
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+
+volumes:
+  postgres:

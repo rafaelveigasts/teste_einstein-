@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "sourceMap": true,
+    "strict": true,
+    "lib": ["esnext"],
+    "rootDir": "./",
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@modules/*": ["./src/modules/*"],
+      "@middlewares/*": ["src/shared/infra/server/middlewares/*"],
+      "@database/*": ["src/shared/infra/prisma/*"],
+      "@config/*": ["./src/config/*"],
+      "@infra/*": ["src/shared/database/prisma/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@tests/*": ["src/tests/*"]
+    },
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./src/@types", "./node_modules/@types"]
+  },
+  "exclude": ["node_modules", "dist"]
+}
