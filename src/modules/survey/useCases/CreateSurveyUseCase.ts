@@ -21,7 +21,7 @@ export class CreateSurveyUseCase implements ICreateSurveyUseCase{
       throw new ConflictError('Survey already exists');
     }
 
-    const surveyRepository = new PrismaSurveyRepository();
+    
 
     const survey = await this.surveyRepository.create({ 
       title: data.title,
