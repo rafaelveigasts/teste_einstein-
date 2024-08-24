@@ -23,7 +23,7 @@ export class ExportSurveyController implements Controller {
         direction
       });
 
-      let ws = fs.createWriteStream('survey.csv')
+      let ws = fs.createWriteStream('/assets/survey.csv')
       csv.write(survey, { headers: true }).pipe(ws)
       
 
