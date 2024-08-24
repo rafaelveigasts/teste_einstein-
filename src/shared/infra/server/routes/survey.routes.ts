@@ -1,6 +1,7 @@
 import { validateDTO } from '@middlewares/requestValidation';
 import { CreateSurveyController } from '@modules/survey/controllers/CreateSurveyController';
 import { CreateSurveyDTO } from '@modules/survey/controllers/dto/CreateSurveyDTO';
+import { ExportSurveyController } from '@modules/survey/controllers/ExportSurveyController';
 import { ListSurveyController } from '@modules/survey/controllers/ListSurveyController';
 import { UpdateSurveyController } from '@modules/survey/controllers/UpdateSurveyController';
 import { adaptRoute } from '@shared/adapter/express-adapter-route';
@@ -11,6 +12,7 @@ import { container } from 'tsyringe';
 const createSurveyController = container.resolve(CreateSurveyController);
 const updateSurveyController = container.resolve(UpdateSurveyController);
 const listSurveyController = container.resolve(ListSurveyController);
+const exportSurveyController = container.resolve(ExportSurveyController);
 
 
 export default (router: Router): void => {
@@ -24,4 +26,5 @@ export default (router: Router): void => {
     adaptRoute(updateSurveyController));
 
     router.get('/survey', adaptRoute(listSurveyController));
+    router.get('/export', adaptRoute(exportSurveyController));
 }
