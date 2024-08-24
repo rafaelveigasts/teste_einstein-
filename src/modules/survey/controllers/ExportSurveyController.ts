@@ -1,6 +1,6 @@
 import { Controller, HttpRequest, HttpResponse } from "@shared/infra/helpers/protocols";
 import { inject, injectable } from "tsyringe";
-import { ok } from "@shared/infra/helpers/httpHelper";
+import { createdOk } from "@shared/infra/helpers/httpHelper";
 import { IListSurveyUseCase } from "../useCases/interfaces/IListSurveyUseCase";
 import { ListSurveyInput } from "../repository/SurveyRepository";
 import * as fs from 'fs';
@@ -28,7 +28,7 @@ export class ExportSurveyController implements Controller {
       
 
 
-      return ok("<a href='survey.csv'>Download</a>");
+      return createdOk(ws);
     
   }
 }
