@@ -3,14 +3,14 @@ import { CreateSurveyDTO } from "./dto/CreateSurveyDTO";
 import { container, inject, injectable } from "tsyringe";
 import { ICreateSurveyUseCase } from "../useCases/ICreateSurveyUseCase";
 import { CreateSurveyUseCase } from "../useCases/CreateSurveyUseCase";
+import { ok } from "@shared/infra/helpers/httpHelper";
 
 @injectable()
 export class CreateSurveyController {
-  constructor(
-    // @inject("ICreateSurveyUseCase") private createSurveyUseCase : ICreateSurveyUseCase,
-  ) {}
+  constructor() {}
   
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+    console.log('controller')
     const { title, email, star_quantity, target_audience }: CreateSurveyDTO = httpRequest.body;
     const createSurveyUseCase = container.resolve(CreateSurveyUseCase);
     
@@ -22,10 +22,10 @@ export class CreateSurveyController {
         target_audience
       });
 
-      return {
-        statusCode: 201,
-        body: survey
-      };
+
+    console.log(survey)
+
+      return ok(survey);
     
   }
 }

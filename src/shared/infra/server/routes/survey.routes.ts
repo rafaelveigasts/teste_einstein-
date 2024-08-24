@@ -1,11 +1,12 @@
 import { CreateSurveyController } from '@modules/survey/controllers/CreateSurveyController';
+import { adaptRoute } from '@shared/adapter/express-adapter-route';
 import {  Router } from 'express';
+import { container } from 'tsyringe';
 
 const surveyRouter = Router();
 
-const createSurveyController = new CreateSurveyController();
+const createSurveyController = container.resolve(CreateSurveyController);
 
-surveyRouter.post('/', createSurveyController.handle);
-
-
-export { surveyRouter };
+export default (router: Router): void => {
+  router.post('/survey', adaptRoute(createSurveyController));
+}

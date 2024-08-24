@@ -15,11 +15,12 @@ export class CreateSurveyUseCase implements ICreateSurveyUseCase{
   
 
   async execute(data: CreateSurveyDTO): Promise<Survey> {
-    const surveyAlreadyExists = await this.surveyRepository.findByTitle(data.title);
+    console.log('usecase')
+    // const surveyAlreadyExists = await this.surveyRepository.findByTitle(data.title);
 
-    if (surveyAlreadyExists) {
-      throw new ConflictError('Survey already exists');
-    }
+    // if (surveyAlreadyExists) {
+    //   throw new ConflictError('Survey already exists');
+    // }
 
     
 
@@ -29,6 +30,7 @@ export class CreateSurveyUseCase implements ICreateSurveyUseCase{
       target_audience: data.target_audience,
       email: data.email
     });
+
 
     return survey;
   }

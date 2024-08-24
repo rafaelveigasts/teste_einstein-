@@ -1,38 +1,20 @@
 import http from 'http';
-
-import { env} from '../../../config/env';
-import { createTerminus } from '@godaddy/terminus';
+import { startApp } from 'src/app';
+import { applicationConfig } from '@config/application';
 import { Logger } from '@shared/infra/logging/logger';
 
-import { app } from '../../../app';
+const serverStarup = async () => {
+  await startApp();
 
-const server = http.createServer(app);
+  const app = (await import('../../../config/app')).default;
+  const server: http.Server = http.createServer(app);
 
-const onSignal = () => {
-  Logger.info('server is starting cleanup');
-  return Promise.resolve();
-};
+  server.listen(applicationConfig.port, () => {
+    Logger.info(`Server started on port ${applicationConfig.port}`);
+  })
+}
 
-const onShutdown = () => {
-  Logger.info('cleanup finished, server is shutting down');
-  return Promise.resolve();
-};
-
-const onHealthCheck = () => {
-  return Promise.resolve('UP');
-};
-
-const terminusConfiguration = Object.freeze({
-  logger: Logger.info,
-  signal: 'SIGINT',
-  healthChecks: {
-    '/healthcheck': onHealthCheck,
-  },
-  onSignal,
-  onShutdown,
+serverStarup().catch((error) => {
+  Logger.error(`Error starting server: ${error}`);
+  process.exit(1);
 });
-
-createTerminus(server, terminusConfiguration);
-server.listen(env.PORT, () =>
-  Logger.info(`Magic happens on port ${env.PORT}`)
-);

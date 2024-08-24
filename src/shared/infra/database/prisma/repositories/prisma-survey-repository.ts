@@ -11,6 +11,7 @@ export class PrismaSurveyRepository implements ISurveyRepository {
   }
   
   async create({ title, star_quantity, target_audience, email }: CreateSurveyDTO): Promise<Survey> {
+    console.log('prisma repository')
     const survey = await this.survey.create({
       data: {
         title,
