@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNumber, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 enum TargetAudience {
   geeks = 'geeks',
@@ -11,14 +11,18 @@ enum TargetAudience {
 
 export class CreateSurveyDTO {
   @IsString()
-  title: string;
+  @IsNotEmpty()
+  public title: string;
 
   @IsEnum(TargetAudience)
-  target_audience: TargetAudience;
+  @IsNotEmpty()
+  public target_audience: TargetAudience;
 
   @IsNumber()
-  star_quantity: number;
+  @IsNotEmpty()
+  public star_quantity: number;
 
   @IsEmail()
-  email: string;
+  @IsNotEmpty()
+  public email: string;
 }

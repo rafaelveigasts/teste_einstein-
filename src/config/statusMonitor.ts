@@ -4,7 +4,7 @@ import { Express } from 'express'
 export default (app: Express): void => {
   app.use(
     statusMonitor({
-      path: '/grand-line-api/status',
+      path: '/teste_einstein/status',
       title: 'Monitor ROL',
       spans: [
         {
@@ -24,7 +24,7 @@ export default (app: Express): void => {
         {
           protocol: 'http',
           host: 'localhost',
-          path: '/grand-line-api/health',
+          path: '/teste_einstein/health',
           port: '3001'
         }
       ],

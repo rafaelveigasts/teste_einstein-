@@ -18,3 +18,4 @@ serverStarup().catch((error) => {
   Logger.error(`Error starting server: ${error}`);
   process.exit(1);
 });
+

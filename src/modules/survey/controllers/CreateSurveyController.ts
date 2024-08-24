@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse } from "@shared/infra/helpers/protocols";
+import { Controller, HttpRequest, HttpResponse } from "@shared/infra/helpers/protocols";
 import { CreateSurveyDTO } from "./dto/CreateSurveyDTO";
 import { container, inject, injectable } from "tsyringe";
 import { ICreateSurveyUseCase } from "../useCases/ICreateSurveyUseCase";
@@ -6,24 +6,31 @@ import { CreateSurveyUseCase } from "../useCases/CreateSurveyUseCase";
 import { ok } from "@shared/infra/helpers/httpHelper";
 
 @injectable()
-export class CreateSurveyController {
-  constructor() {}
+export class CreateSurveyController implements Controller {
+  constructor(
+    @inject("ICreateSurveyUseCase")
+    private createSurveyUseCase: ICreateSurveyUseCase
+  ) {}
   
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    console.log('controller')
+    
     const { title, email, star_quantity, target_audience }: CreateSurveyDTO = httpRequest.body;
-    const createSurveyUseCase = container.resolve(CreateSurveyUseCase);
-    
-    
-      const survey = await createSurveyUseCase.execute({
+
+    if (!title || !email || !star_quantity || !target_audience) {
+      return {
+        statusCode: 400,
+        body: {
+          message: "Missing param error"
+        }
+      }
+    }
+
+      const survey = await this.createSurveyUseCase.execute({
         title,
         email,
         star_quantity,
         target_audience
       });
-
-
-    console.log(survey)
 
       return ok(survey);
     

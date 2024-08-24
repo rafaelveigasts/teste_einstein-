@@ -1,5 +1,5 @@
-import EHttpStatusCode from "@infra/errors/dto/EHttpStatusCode";
-import { ErrorModel } from "@infra/errors/dto/ErrorModel";
+import EHttpStatusCode from "@shared/errors/dto/EHttpStatusCode";
+import { ErrorModel } from "@shared/errors/dto/ErrorModel";
 
 export class PayloadError extends ErrorModel {
   constructor(message: string) {
