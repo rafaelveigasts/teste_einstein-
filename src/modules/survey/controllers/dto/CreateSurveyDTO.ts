@@ -1,6 +1,6 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
-enum TargetAudience {
+export enum TargetAudience {
   geeks = 'geeks',
   nerds = 'nerds',
   minimalistas = 'minimalistas',

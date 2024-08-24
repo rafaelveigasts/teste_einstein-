@@ -1,5 +1,5 @@
 import { CreateSurveyDTO } from "@modules/survey/controllers/dto/CreateSurveyDTO";
-import { ISurveyRepository } from "@modules/survey/repository/SurveyRepository";
+import { ISurveyRepository, UpdateSurveyInput } from "@modules/survey/repository/SurveyRepository";
 import prisma from "../prismaClient";
 import { PrismaClient, Survey } from "@prisma/client";
 
@@ -15,8 +15,8 @@ export class PrismaSurveyRepository implements ISurveyRepository {
     const survey = await this.survey.create({
       data: {
         title,
-        star_quantity,
         target_audience,
+        star_quantity,
         email
       }
     })
@@ -32,5 +32,17 @@ export class PrismaSurveyRepository implements ISurveyRepository {
     })
 
     return survey
+  }
+
+  async update({ id, email, star_quantity }: UpdateSurveyInput): Promise<Survey> {
+    const updated = await this.survey.update({
+      where: { id },
+      data: {
+        email,
+        star_quantity
+      }
+    })
+
+    return updated
   }
 }

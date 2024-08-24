@@ -19,8 +19,8 @@ model Survey {
   id              String          @id @default(uuid())
   title           String
   target_audience Target_audience
-  star_quantity   Int
-  email           String
+  star_quantity   Int?
+  email           String?
   created_at      DateTime        @default(now())
   updated_at      DateTime        @updatedAt
 

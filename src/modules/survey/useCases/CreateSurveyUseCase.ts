@@ -1,7 +1,7 @@
 import { Survey } from "@prisma/client";
 import { CreateSurveyDTO } from "../controllers/dto/CreateSurveyDTO";
 import { ISurveyRepository } from "../repository/SurveyRepository";
-import { ICreateSurveyUseCase } from "./ICreateSurveyUseCase";
+import { ICreateSurveyUseCase } from "./interfaces/ICreateSurveyUseCase";
 import { inject, injectable } from "tsyringe";
 // import { ConflictError } from "@shared/errors/conflict-error";
 
@@ -22,9 +22,7 @@ export class CreateSurveyUseCase implements ICreateSurveyUseCase{
 
     const survey = await this.surveyRepository.create({ 
       title: data.title,
-      star_quantity: data.star_quantity,
-      target_audience: data.target_audience,
-      email: data.email
+      target_audience: data.target_audience
     });
 
 
