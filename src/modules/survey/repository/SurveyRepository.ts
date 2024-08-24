@@ -12,8 +12,13 @@ export type UpdateSurveyInput = {
    star_quantity: number
 }
 
+export type ListSurveyInput = {
+   target_audience: TargetAudience
+   direction: 'asc' | 'desc'
+}
 export interface ISurveyRepository {
    create ({ title, target_audience }: CreateSurveyInput): Promise<Survey>
    findByTitle(title: string): Promise<Survey | null>
    update({ id, email, star_quantity }: UpdateSurveyInput): Promise<Survey>
+   list({ target_audience, direction }: ListSurveyInput): Promise<Survey[]>
 }

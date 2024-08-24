@@ -15,14 +15,14 @@ export class UpdateSurveyController implements Controller {
     
     const { id, star_quantity, email }: UpdateSurveyInput = httpRequest.body;
 
-      const survey = await this.updateSurveyUseCase.execute({
+      const surveys = await this.updateSurveyUseCase.execute({
         id,
         email,
         star_quantity,
       });
 
 
-      return ok(survey);
+      return ok(surveys);
     
   }
 }
