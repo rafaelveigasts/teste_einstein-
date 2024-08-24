@@ -16,21 +16,13 @@ export class CreateSurveyController implements Controller {
     
     const { title, email, star_quantity, target_audience }: CreateSurveyDTO = httpRequest.body;
 
-    if (!title || !email || !star_quantity || !target_audience) {
-      return {
-        statusCode: 400,
-        body: {
-          message: "Missing param error"
-        }
-      }
-    }
-
       const survey = await this.createSurveyUseCase.execute({
         title,
         email,
         star_quantity,
         target_audience
       });
+
 
       return ok(survey);
     
