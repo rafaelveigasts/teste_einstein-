@@ -4,15 +4,7 @@ import schemas from './schemas'
 export default {
   openapi: '3.0.1',
 
-  components: {
-    securitySchemes: {
-      bearerAuth: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT'
-      }
-    }
-  },
+
 
   info: {
     title: 'API para pesquisas',
@@ -29,12 +21,7 @@ export default {
       description: 'Servidor Principal'
     }
   ],
-  tags: [
-    {
-      name: 'Health Check',
-      description: 'Rotas para verificação se a aplicação esta rodando'
-    }
-  ],
+
   paths,
   schemas
 }

@@ -1,38 +1,30 @@
 export const updateSurvey = {
   put: {
-    tags: ['Portal Paciente V3 - Profile'],
-    summary: 'API para atualizar a senha do paciente',
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT'
-        }
-      }
-    },
-    requestBody: {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/schemas/updatePasswordV3Schema'
-          }
-        }
-      }
-    },
-    security: [
-      {
-        bearerAuth: [] as any
-      }
-    ],
+    tags: ['Survey'],
+    summary: 'API para atualizar uma pesquisa',
+
     parameters: [
       {
-        $ref: '#/schemas/apiKeyAuthSchema'
+        in: 'body',
+        name: 'id',
+        required: true,
+        description: 'Id da pesquisa',
+        example: 'uuid'
       },
-
       {
-        $ref: '#/schemas/headerSubdomainSchema'
-      }
+        in: 'body',
+        name: 'email', 
+        required: true,
+        description: 'Email do usuário',
+        example: 'a@b.c'
+      },
+      {
+        in: 'body',
+        name: 'star_quantity',
+        required: true,
+        description: 'Quantidade de estrelas',
+
+      },
     ],
 
     responses: {

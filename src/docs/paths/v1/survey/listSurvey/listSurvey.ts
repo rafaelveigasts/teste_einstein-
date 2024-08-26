@@ -1,30 +1,21 @@
 export const listSurvey = {
   get: {
-    tags: ['Portal Paciente V3 - Profile'],
-    summary: 'API para buscar endereços do paciente',
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT'
-        }
-      }
-    },
+    tags: ['Survey'],
+    summary: 'API para buscar pesquisa',
 
-    security: [
-      {
-        bearerAuth: [] as any
-      }
-    ],
     parameters: [
       {
-        $ref: '#/schemas/apiKeyAuthSchema'
+        in: 'body',
+        name: 'direction',
+        required: false,
+        example: 'asc | desc'
       },
-
       {
-        $ref: '#/schemas/headerSubdomainSchema'
-      }
+        in: 'body',
+        name: 'target_audience',
+        required: false,
+        example: 'geeks'
+      },
     ],
 
     responses: {
@@ -33,7 +24,7 @@ export const listSurvey = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/profileAdressesV3Response'
+              $ref: '#/schemas/listSurveyResponse'
             }
           }
         }

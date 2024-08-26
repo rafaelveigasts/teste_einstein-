@@ -6,7 +6,7 @@ import {
 } from '../paths/'
 
 export const v1SwaggerRoutes = {
-  '/health': healthCheck,
+  
   '/survey': {
     ...listSurvey,
     ...createSurvey,
