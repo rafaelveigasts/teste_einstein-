@@ -1,5 +1,5 @@
 import { Survey } from "@prisma/client";
-import { CreateSurveyDTO } from "../controllers/dto/CreateSurveyDTO";
+import { CreateSurveyDTO, TargetAudience } from "../controllers/dto/CreateSurveyDTO";
 import { ISurveyRepository } from "../repository/SurveyRepository";
 import { ICreateSurveyUseCase } from "./interfaces/ICreateSurveyUseCase";
 import { inject, injectable } from "tsyringe";
