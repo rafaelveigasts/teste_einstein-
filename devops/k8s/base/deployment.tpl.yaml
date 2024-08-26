@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: teste_einstein_api
+data:
+  NODE_ENV: production
+  PORT: '3000'
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teste_einstein_api
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.opentelemetry.io/inject: 'true'
+        instrumentation.opentelemetry.io/inject-nodejs: 'true'
+    spec:
+      containers:
+        - name: teste_einstein_api
+          image: 'gcr.io/GOOGLE_CLOUD_PROJECT/teste_einstein_api:latest'
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: teste_einstein_api
+          volumeMounts:
+            - name: service-account
+              mountPath: /var/run/secret/cloud.google.com
+          ports:
+            - containerPort: 3001
+              name: http
+              protocol: TCP
+      volumes:
+        - name: service-account
+          secret:
+            secretName: teste-sa
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teste_einstein_api-svc
+spec:
+  selector:
+    app: teste_einstein_api
+  ports:
+    - port: 3001
+      protocol: TCP
+      targetPort: 3001
+  type: ClusterIP
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: teste_einstein_api
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: teste_einstein_api
+  minReplicas: 2
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-teste
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-teste
+        role: master
+        tier: backend
+    spec:
+      containers:
+        - name: master
+          image: redis
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+          ports:
+            - containerPort: 6379
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-teste-svc
+spec:
+  ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+  type: ClusterIP

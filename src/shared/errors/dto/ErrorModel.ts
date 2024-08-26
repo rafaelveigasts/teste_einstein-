@@ -31,7 +31,7 @@ export class ErrorModel extends Error {
   }
 
   private extractFunctionName() {
-    const stack = this.stack ? this.stack.split('\n') : []
+    const stack = this.stack.split('\n')
     const callerLine = stack[1]
     const functionNameRegex = /at\s+(.*)\s+\(/
     const functionName = functionNameRegex.exec(callerLine)
@@ -39,7 +39,7 @@ export class ErrorModel extends Error {
   }
 
   private extractFileName() {
-    const stack = (this.stack ?? '').split('\n')
+    const stack = this.stack.split('\n')
     const callerLine = stack[1]
     const fileNameRegex = /\((.*):\d+:\d+\)/
     const fileName = fileNameRegex.exec(callerLine)

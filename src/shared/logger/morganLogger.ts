@@ -1,6 +1,6 @@
 import morgan, { StreamOptions } from 'morgan'
 import { Request, Response } from 'express'
-import { applicationConfig } from '../../config/application'
+import { applicationConfig } from '@/config'
 import { logger } from './logger'
 
 const morganFormat = applicationConfig.env == 'development' ? 'tiny' : 'short'

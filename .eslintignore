@@ -1,5 +1,4 @@
-dist
 node_modules
-/*.js
-@types
-/*.ts
+dist
+build
+tsconfig.json

@@ -6,12 +6,7 @@ export default async (app: Express): Promise<void> => {
   const router = Router()
   app.use('/teste_einstein', router)
 
-  recursiveReaddir(join(__dirname, '../shared/infra/server/routes'), async (err, files) => {
-    if (err) {
-      console.error('Erro ao ler arquivos:', err)
-      return
-    }
-
+  recursiveReaddir(join(__dirname, '/../application/routes'), async (err, files) => {
     for (const file of files) {
       if (!file.endsWith('.map')) {
         try {

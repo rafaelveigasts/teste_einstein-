@@ -1,0 +1,45 @@
+steps:
+  #builds the container image.
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Build image
+    args:
+      - 'build'
+      - '-f'
+      - 'devops/pkg/dockerfile'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/teste_einstein:$SHORT_SHA-$BUILD_ID'
+      - '.'
+
+  # pushes the image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Push
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/teste_einstein:$SHORT_SHA-$BUILD_ID'
+
+  # generates the new manifest
+  #the entrypoint in a build step to specify an entrypoint if you don't want to use the default entrypoint of the builder.
+  #If you don't set this field, Cloud Build will use the builder's entrypoint.
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Generate manifest
+    entrypoint: /bin/sh
+    args:
+      - '-c'
+      - |
+        sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" devops/k8s/base/deployment.tpl.yaml | \
+        sed "s/latest/${SHORT_SHA}-${BUILD_ID}/g" > devops/k8s/base/deployment.yaml
+
+  # deploys the new version of our container image in the Kubernetes Engine cluster.
+  #The env takes a list of environment variables to be used when running the step. The are KEY=VALUE.
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: Deploy
+    args: ['apply', '-k', 'devops/k8s/overlays/staging', '-n', 'staging']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=kubernetes'
+
+tags:
+  - 'repo-teste_einstein'
+  - 'team-architecture'
+
+timeout: 1200s

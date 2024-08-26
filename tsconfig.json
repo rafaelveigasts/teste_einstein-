@@ -1,34 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES2020",
-    "type": "module",
     "sourceMap": true,
-    "strict": true,
+    "target": "ES2019",
     "lib": ["esnext"],
-    "rootDir": "./",
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "paths": {
-      "@modules/*": ["./src/modules/*"],
-      "@middlewares/*": ["src/shared/infra/server/middlewares/*"],
-      "@database/*": ["src/shared/infra/prisma/*"],
-      "@config/*": ["./src/config/*"],
-      "@infra/*": ["src/shared/database/prisma/*"],
-      "@shared/*": ["./src/shared/*"],
-      "@tests/*": ["src/tests/*"]
-    },
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "rootDir": "src",
+    "baseUrl": "./src",
     "resolveJsonModule": true,
-    "typeRoots": ["./src/@types", "./node_modules/@types"],
-    "types": ["vitest/globals"]
+    "allowJs": true,
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["*"],
+      "@tests/*": ["src/tests/*"]
+    }
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["src"],
+  "exclude": ["./jest.config.ts", "node_modules", "vite.config.ts"]
 }
