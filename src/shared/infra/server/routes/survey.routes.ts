@@ -1,3 +1,4 @@
+import { MiddlewareUtils } from '@middlewares/MiddlewareUtils';
 import { validateDTO } from '@middlewares/requestValidation';
 import { CreateSurveyController } from '@modules/survey/controllers/CreateSurveyController';
 import { CreateSurveyDTO } from '@modules/survey/controllers/dto/CreateSurveyDTO';
@@ -17,6 +18,9 @@ const exportSurveyController = container.resolve(ExportSurveyController);
 
 export default (router: Router): void => {
   router.post('/survey', 
+    MiddlewareUtils.requestValidation({
+    body: CreateSurveyDTO
+  }),
   //   validateDTO({
   //   body: CreateSurveyDTO
   // }), 

@@ -25,7 +25,7 @@ export class PrismaSurveyRepository implements ISurveyRepository {
   }
 
   async findByTitle(title: string): Promise<Survey | null> {
-    const survey = await this.survey.findFirstOrThrow({
+    const survey = await this.survey.findFirst({
       where: {
         title
       }

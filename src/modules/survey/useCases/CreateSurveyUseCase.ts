@@ -3,6 +3,7 @@ import { CreateSurveyDTO, TargetAudience } from "../controllers/dto/CreateSurvey
 import { ISurveyRepository } from "../repository/SurveyRepository";
 import { ICreateSurveyUseCase } from "./interfaces/ICreateSurveyUseCase";
 import { inject, injectable } from "tsyringe";
+import { BadRequest } from "@shared/errors/dto/BadRequest";
 // import { ConflictError } from "@shared/errors/conflict-error";
 
 @injectable()
@@ -13,12 +14,9 @@ export class CreateSurveyUseCase implements ICreateSurveyUseCase{
   ){}
 
   async execute(data: CreateSurveyDTO): Promise<Survey> {
-    console.log('usecase')
-    // const surveyAlreadyExists = await this.surveyRepository.findByTitle(data.title);
+    
 
-    // if (surveyAlreadyExists) {
-    //   throw new ConflictError('Survey already exists');
-    // }
+    await this.validate(data);
 
     const survey = await this.surveyRepository.create({ 
       title: data.title,
@@ -27,5 +25,17 @@ export class CreateSurveyUseCase implements ICreateSurveyUseCase{
 
 
     return survey;
+  }
+
+  private async validate(data: CreateSurveyDTO): Promise<void> {
+    if (!Object.values(TargetAudience).includes(data.target_audience)) {
+      throw new BadRequest('Invalid target audience');
+    }
+
+    const alreadyExists = await this.surveyRepository.findByTitle(data.title);
+
+    if (alreadyExists) {
+      throw new Error('Survey already exists');
+    }
   }
 }
