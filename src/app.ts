@@ -6,6 +6,5 @@ import './infra/containers'
 
 export const startApp = async () => {
   const app = (await import('./config/app')).default
-
-  return app
+return app
 }
