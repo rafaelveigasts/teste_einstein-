@@ -17,7 +17,7 @@ export default {
   },
   servers: [
     {
-      url: '/teste-einstein',
+      url: '/teste_einstein',
       description: 'Servidor Principal'
     }
   ],
